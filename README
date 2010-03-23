@@ -4,6 +4,12 @@ Pasitaiko tokių situacijų, kai labai ilgas darbas paima ir išnyksta iš kompi
 
 Kursinis rašomas:
 - Latex;
+- - Geometry;
+- - Inputenc;
+- - Fontenc;
+- - Babel;
+- - Tikz;
+- - Pdfplots;
 - Emacs;
 
 Su niekuom nesidalinsiu :)
