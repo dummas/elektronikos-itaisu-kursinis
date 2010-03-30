@@ -27,6 +27,78 @@
 \tableofcontents
 \newpage
 \section{Įvadas}
+\section{Šiluminė priemaišų difuzija}
+Difuzija ( log. \emph{diffusio} - sklidimas ) yra kryptingas medžiagos dalelių skverbimasis jų tankio mažėjimo 
+link dėl šių dalelių chaotiško judėjimo. Gaminant puslaidininkinius įtaisus ir puslaidininkinius integrinius grandynus, 
+difuzijos reiškinys panaudojamas puslaidininkiams legiruoti. Aukštoje temperatūroje difuzijos būdu į 
+paviršinį puslaidininkio sluoksnį įterpus priemaišų, galima pakeisti šio sluoksnio laidumo tipą arba sudaryti lokaliąsias kitokio laidumo stiris.
+\subsection{Priemaišų difuzijos mechanizmas ir greitis}
+Šiluminė priemaišų difuzija vyksta dėl difunduojančios medžiagos - difuzanto - koncentracijos gradiento.\\
+Priemaišiniai atomai į kietuosius kūnus gali skverbtis keliais būdais: užimdami vakansijas, prasiskverbdami tarp mazgų ir pasikeisdami vietomis su gretimais atomais.\\
+Tikimiausias yra pirmasis priemaišų atomų difuzijos mechanizmas, nes aukštoje temperatūroje vakansijų gali būti gana daug. 
+Jos atsiranda kaip Šotkio arba Frenkelio defektai. Kylant temperatūrai, vakansijų tankis auga, priemaišinių atomų skverbimosi per 
+vakansijas tikimybė didėja. Beje, didėjant prasiskverbusių į padėklą priemaišų tankiui ir dėl to mažėjant vakansijų tankiui, svarbesnis 
+tampa antrasis priemaišų skverbimosi kelias - per tarpmazgius. Mažiausiai tikėtinas trečiasis priemaišinių atomų skverbimosi būdas, nes 
+gretimi atomai gardelės mazguose gali pasikeisti vietomis tik įgiję gana daug energijos.\\
+Difuzijos proceso greitį apibūdina difuzijos koeficientas. Šiluminės priemaišų difuzijos koeficientas $D$ paprastai išreiškiamas 
+kvadratiniais centimetrais per sekundę ($cm^2/s$). Jo skaitinę vertę reiškia skaičių dalelių, pereinančių per $1\;cm^2$ plotą 
+per $1\;s$, kai priemaišos atomų tankio gradientas lygus $1\;cm^{-4}$.\\
+Difuzijos koeficientas labai priklauso nuo temperatūros. Jai kylant, difuzijos koeficientas sparčiai didėja. 
+Priklausomybė $D(T)$ išreiškiama Arenijaus ($Arrhenius$) lygtimi:\\
+\[D = D_0 e^{-W_a/kT};\]
+čia $D_0$ - proporcingumo koeficientas; $W_a$ - difuzijos proceso aktyvacijos energija; $k$ - Bolcmano konstanta; $T$ - difuzijos proceso temperatūra.\\
+Koeficientas $D_0$ priklauso nuo puslaidininkio ir priemaišos tipo, kristalo-grafinės krypties, 
+kuri vyksta difuzija, ir pradinio priemaišų tankio. Aktyvacijos energija $W_a$ priklauso nuo puslaidininkio, 
+priemaišos tipo ir difuzijos mechanizmo. Jei į silicį difunduoja boras, tai $W_a \approx 3,7$ eV, jei fosforas, - 4,4 eV.\\
+Kadangi koeficientas $D_0$ ir aktyvacijos energijos energija $W_a$ priklauso nuo daugelio veiksnių, 
+tai ankstesnė lygtis gerai tinka tik difuzijos koeficiento $D$ priklausomybių nuo $T$ ir $W_a$ pobūdžiui išreikšti. 
+Praktikoje priemaišos difuzijos koeficientas randamas iš literatūroje pateikiamų grafikų, sudarytų remiantis eksperimentų rezultatais.
+\subsection{Difuzijos procesų teorija}
+Difuzijos teorija pagrįsta dviem dėsniais, kuriuos 1855 m. suformulavo šveicarų mokslininkas A.Fikas (\emph{Fick}).\\
+Taikydami pirmą difuzijos dėsnį priemaišų difuzijai ir laikydami, kad priemaišiniai atomai skverbiasi į kristalą $x$ ašies kryptimi, galime rašyti:
+\[ J(x,t) = - D \frac{\delta N(x,t)}{\delta x}\]
+čia $J$ - priemaišos atomų srauto tankis, $N$ - priemaišos atomų tankis, $t$ - laikas.\\
+Antro Fiko dėsnio matematinę ištaišką galima išvesti remiantis pirmuoju dėsniu.\\
+Imkime ploną sluoksnį $\delta x$ tarp dviejų vienetinio ploto plokštumų, statmenų difuzinio srauto krypčiai. 
+Sakykime, kad priemaišos tankis sluoksnyje laiko momentu $t$ yra $N(x,t)$. Prabėgus laikui $\delta t$, 
+priemaišos tankis tampa $N(x,t+ \delta t)$. Tada priemaišos atomų skaičiaus pokytis nagrinėjamame sluoksnyje per laiką $\delta t$ yra
+\[ [ N (x,t+\delta t ) - N(x,t) ] \delta x = \frac{\delta N(x,t)}{\delta t} \delta t \delta x\]
+Priemaišos tankis kinta todėl, kad priemaišos atomų srautas $J(x,t)$, tekantis į nagrinėjamąjį sluoksnį per 1 plokštymą, 
+skiriasi nuo ištekančio per 2 plokštumą srauto $J(x+\delta x,t)$. Dėl to, kad šie srautai nevienodi, 
+priemaišos atomų skaičiaus pokytį sluoksnyje $\delta x$ per elementarųjį laiką $\delta t$ galima išreikšti formule:
+\[ [J(x,t) - J(x + \delta x,t ) ] \delta t = - \frac{\delta J(x,t)}{\delta x} \delta x \delta t. \]
+Sulyginę ankstesnes dvi formules, gauname:
+\[ \frac{\delta N(x,t)}{\delta t} = - \frac{\delta J(x,t)}{\delta t} \]
+Įrašę į šią lygtį srauto tankio išraišką, gauname diferencialinę lygtį, kuria išreiškiamas antrasis Fiko dėsnis:
+\[ \frac{\delta N(x,t)}{\delta t} = D \frac{\delta^2 N(x,t)}{\delta x^2} \]
+Ši lygtis aprašo primaišos kaupimosi greitį. Ja naudojantis galima nagrinėti difuzijos proceso dinamiką.\\
+Išsprendus antro Fiko dėsnio lygti, randama priemaišos tankio priklausomybė nuo difuzijos trukmės ir koordinatės, 
+taigi galima apskaičiuoti priemaišos pasiskirstymą kristale bet kuriuo laiko momentu. 
+Priemaišos tankio priklausomybė nuo koordinatės vadinama koncentracijos profiliu, arba legiravimo profiliu.\\
+Praktikoje pasitaikančias priemaišų difuzijos sąlygas gana greitai atitinka du paprasti teoriniai modeliai: difuzija iš nesenkančio šaltinio ir difuzija iš riboto šaltinio.\\
+Laikoma, kad difuzijos šaltinis yra nesenkantis, jeigu priemaišos atomų tankis kristalo paviršiuje nekinta - jeigu $N(0,t) = N_0 = const$, 
+kai $t \geq 0$. Atsižvelgus į pradinę sąlygą $N(x,t) = 0$, kai $x \geq 0 $ ir $t=0$, bei ribinę sąlygą $N(x,t)=0$, 
+kai $x \rightarrow \infty$ ir $t \geq 0$, gaunamas toks antrosios Fiko diferencialinės lygties sprendinys:
+\[N(x,t) = N_0\;erfc\frac{x}{2\sqrt{Dt}}\]
+čia erfc - papildoma paklaidų funkcija ( \emph{error function complement} ), išreiškiama formule:
+% TODO: REIKIA integralo
+\[erfc(y) = 1 - \frac{2}{\sqrt{\pi}} \int^y_0 exp(-y^2) \delta y\]
+Dydis $\sqrt{Dt}$ vadinamas difuzijos nuotoliu.\\
+Pagal $N(x,t)$ išraišką, priemaišos atomų tankio pasiskirstymą lemia difuzijos koeficientas $D$ ( proceso temperatūra T ) ir difuzijos proceso trukmė $t$. Vykstant difuzijai iš nesenkančio šaltinio, didesniame gylyje priemaišos tankis yra mažesnis. Tam tikrame gylyje, kol vyksta difuzija, priemaišos atomų tankis didėja. Jei difuzijos procesas vyktų pakankamai ilgai, priemaišos atomų tankis bet kuriame gylyje taptų toks, kaip paviršiuje.\\
+Nuo difuzijos proceso temperatūros ir trukmės priklauso ir legiravimo dozė $Q$ -  skaičius priemaišos atomų, perėjusių per vienetinį padėklo paviršiaus plotą per difuzijos laiką $t$.\\
+Žinodami $N(x,t)$, galime rasti difuzijos srauto tankį. Taikydami pirmajį Fiko dėsnį, galime rašyti:
+\[ J(0,t) = - D\frac{\delta N(x,t)}{\delta x}|_{x=0}  \]
+Į šią formulę įrašę priemaišos pasiskirstymo išraišką, gauname:
+\[J(0,t) = D\frac{N_0}{\sqrt{\pi Dt}} e^{-(x/2\sqrt{Dt})^{2}}|_{x=0} = N_0 \sqrt{\frac{D}{\pi}}\]
+Suintegravę priemaišos atomų srautą per vienetinio ploto padėklo paviršių, gauname legiravimo dozę:
+\[ Q(t) = \int^{t}_{0}J(0,t)\delta t = ... = 2N_0 \sqrt{\frac{Dt}{\pi}} \]
+Praktikoje šiluminės priemaišų difuzijos procesą dažniausiai sudaro dvi stadijas. Difuzija iš nesenkančio šaltinio vyksta pirmojoje - \emph{priemaišų įterpimo} stadijoje. Šioje stadijoje į ploną paviršinį kristalo sluoksnį įterpiamas reikiamas priemaišos kiekis. Antrojoje - \emph{priemaišų perskirstymo} stadijoje - aukštesnėje temperatūroje suformuojamas legiravimo profilis.\\
+Dažnai antrojoje difuzijos stadijoje atliekamas ir paviršiaus oksidavimas. Todėl antrojoje stadijoje priemaišiniai atomai per padėklo paviršių neprasiskverbia ir legiravimo dozė nekinta. Tada difuzija vyksta iš riboto šaltinio - iš pirmojoje stadijoje legiruoto paviršinio sluoksnio. Šiomis sąlygomis antrosios Fiko diferencialinės lygties sprendinys išreiškiamas formule:
+\[ N(x,t') = \frac{Q}{\sqrt{\pi D't'}} exp \left (-\frac{x^2}{4D't'} \right ) \]
+čia $D'$ - priemaišos difuzijos koeficientas priemaišų perskirstymo etape, t' - šio etapo trukmė.\\
+Pastaroji formulė atitinka Gauso ( Gauss ), arba normalųjį, pasiskirstymą. Kreivių parametras yra difuzijos koeficiento ir proceso trukmės sandauga.
+
+
 \section{Difuzijos proceso tyrimas}
 \subsection{Apskaičiuoti ir nubraižyti priemaišų pasiskirstymą po priemaišų įterpimo etapo}
 Pradiniai duomenys:\\
@@ -102,22 +174,31 @@ Priemaišų perskirstymo stadiją galime apibrėžti:\\
 
 \begin{tabular}{|r|c|c|c|}\hline
   & Įterpimo stadija & Perskirstymo stadija & Įterpimo stadija \\ \hline
-  Priemaišų koncentracija ($1/cm^3$): & $2.5*10^{19}$ & - & $1.4*10^{21}$ \\ \hline
-  Normali temperatūra ($^{\circ}C$): & $1000$ & $1000$ & $1000$ \\ \hline
-  Aktyvacijos energija ($eV$): & $2.2$ & $3.7$ & $2.9$ \\ \hline
-  Difuzijos koeficientas ($cm^2/s$): & $1.9*10^{-13}$ & $1.4*10^{-13}$ & $3.8*10^{-13}$ \\  \hline
-  Stadijos trukmė ($min.$): & $24$ & $77$ & $42$ \\ \hline
-  Faktinė temperatūra ($^{\circ}C$): & $942$ & $1056$ & $318$ \\ \hline
-\end{tabular}
+  Priemaišų koncentracija ($1/cm^3$): & $2.5*10^{19}$   & -              & $1.4*10^{21}$ \\ \hline
+  Normali temperatūra ($^{\circ}C$):   & $1000$         & $1000$         & $1000$ \\ \hline
+  Aktyvacijos energija ($eV$):        & $2.2$          & $3.7$          & $2.9$ \\ \hline
+  Difuzijos koeficientas ($cm^2/s$):  & $1.9*10^{-13}$  & $1.4*10^{-13}$  & $3.8*10^{-13}$ \\  \hline
+  Stadijos trukmė ($min.$):           & $24$           & $77$           & $42$ \\ \hline
+  Faktinė temperatūra ($^{\circ}C$):   & $942$          & $1056$         & $318$ \\ \hline
+\end{tabular}\\\\\\
 % Dvikartė difuzija
 % Bazes difuzija
-
-
+\begin{tikzpicture}[domain=0:0.005]
+  \begin{axis} [
+      ylabel=$$,
+      xlabel=$$,
+      grid=major
+    ]
+    % Q = N_0 * sqrt{ \pi D' t' }
+    %                                              Q
+    %\addplot[smooth] plot function{ ( 2.5*10^(19)*sqrt(pi*1.9*10^(-13)*24*60) ) };
+  \end{axis}
+\end{tikzpicture}
 
 
 \section{Dvipolio tranzistoriaus parametrų skaičiavimas ir ekvivalentinės grandinės schemos sudarymas}
 Pradiniai duomenys:\\
-$I_B = 0.14 mA$, $U_{CE} = 8V$, $f_{T} = 0.9 GHz$;\\
+$I_B = 0.14 mA = 0.14 * 10^{-3}$, $U_{CE} = 8V$, $f_{T} = 0.9 GHz = 0.9*10^{9}Hz$;\\
 \subsection{Rasti dvipolio tranzistoriaus $h$ parametrus}
 \subsection{Sudaryti tranzistoriaus $\Pi$ pavidalo ekvivalentinės grandinės schemą, rasti jos elementų parametrus}
 \subsection{Apskaičiuoti išėjimo srovės kintamąją dedamąją, kai kintamoji įėjimo įtampa yra 115mV}
