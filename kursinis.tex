@@ -96,7 +96,21 @@ Praktikoje šiluminės priemaišų difuzijos procesą dažniausiai sudaro dvi st
 Dažnai antrojoje difuzijos stadijoje atliekamas ir paviršiaus oksidavimas. Todėl antrojoje stadijoje priemaišiniai atomai per padėklo paviršių neprasiskverbia ir legiravimo dozė nekinta. Tada difuzija vyksta iš riboto šaltinio - iš pirmojoje stadijoje legiruoto paviršinio sluoksnio. Šiomis sąlygomis antrosios Fiko diferencialinės lygties sprendinys išreiškiamas formule:
 \[ N(x,t') = \frac{Q}{\sqrt{\pi D't'}} exp \left (-\frac{x^2}{4D't'} \right ) \]
 čia $D'$ - priemaišos difuzijos koeficientas priemaišų perskirstymo etape, t' - šio etapo trukmė.\\
-Pastaroji formulė atitinka Gauso ( Gauss ), arba normalųjį, pasiskirstymą. Kreivių parametras yra difuzijos koeficiento ir proceso trukmės sandauga.
+Pastaroji formulė atitinka Gauso ( Gauss ), arba normalųjį, pasiskirstymą. Kreivių parametras yra difuzijos koeficiento ir proceso trukmės sandauga. Pradžioje ( kai $D't' = 0$ ) priemaišos atomų tankis padėklo paviršiuje paprastai atitinka ribinį priemaišos tirpumą. Didėjant sandaugai $D't'$, priemaišiniai atomai iš paviršinio sluoksnio skverbiasi gilyn į padėklą. Todėl prie padėklo paviršiaus priemaišos tankis mažėja, padėklo gilumoje - didėja. Kreivių ribojamas plotas nekinta, nes nekinta legiravimo dozė.\\
+Remiantis gautomis išraiškomis, galima teoriškai parinkti šiluminės priemaišų difuzijos procesų sąlygas.\\
+Sakykime, kad į padėklą, kuriame pradinis priemaišos atomų tanki $N_{pr}$, atliekama kito tipo priemaišos šiluminė difuzija. Po antrosios difuzijos stadijos padėklo paviršiuje reikia gauti difunduojančios priemaišos atomų tankį $N_0$. Kito laidumo tipo difuzinio sluoksnio storis (pn sandūros gylis) turi būti $x_{pn}$.\\
+Pagal suformuluotą užduotį turi būti tenkinamos sąlygos $N(0,t) = N_0$ ir $N(x_{pn},t) = N_{pr}$. Pasinaudoję šiomis sąlygomis, gauname:\\
+\[N_0 = \frac{Q}{\sqrt{\pi D't'}}\]
+ir
+\[ N_{pr} = \frac{Q}{\sqrt{\pi D't'}}exp \left ( - \frac{x^2_{pn}}{4D't'} \right ) = N_0 exp \left ( - \frac{x^2_{pn}}{4D't'} \right ) \]
+Pagal šią išraišką, gauname:
+\[x^2_{pn} = 4D't'ln \frac{N_0}{N_{pr}} \]
+Taikydami šią formulę, galime rasti pn sandūros gylį arba parinkti difuzijos proceso sąlygas ( proceso temperatūrą ir trukmę ), kad sandūra sudarytų reikiamame gylyje. Tuomet, remiantis $N_0$ išraišką, galima rasti legiravimo dozę:
+\[Q = N_{0}\sqrt{\pi D't'}\]
+Žinodami reikalingą legiravimo dozę, pirmosios difuzijos stadijos sąlygas (temperatūrą ir trukmę) galime parinkti remiantis
+\[Q(t) = .. = 2N_0 \sqrt{\frac{Dt}{\pi}}\]
+Panašiai difuzijos proceso režimą teoriškai galima parinkti ir tuo atveju, kai taikoma tik viena - priemaišų įterpimo - stadija. Tuomet reikia remtis
+\[N(x,t) = N_0 erfc\frac{x}{2 \sqrt{Dt}}\]
 
 
 \section{Difuzijos proceso tyrimas}
@@ -189,17 +203,25 @@ Priemaišų perskirstymo stadiją galime apibrėžti:\\
       xlabel=$$,
       grid=major
     ]
-    % Q = N_0 * sqrt{ \pi D' t' }
+    % Q = N_0 * \sqrt{ \pi D1 t1 }
     %                                              Q
-    %\addplot[smooth] plot function{ ( 2.5*10^(19)*sqrt(pi*1.9*10^(-13)*24*60) ) };
+    %\addplot[smooth] plot function{ ( 2.5*10^(19) * sqrt(pi*1.9*10^(-13)*24*60) ) };
+    % Priemaišos pasiskirstymo stadija  N(x,t')
+    % TODO
+    \addplot[smooth] plot function{ (2.5*10^(19)*sqrt(pi*1.9*10^(-13)*24*60))/sqrt(pi*1.4*10^(-13)*77*60)*exp(-x^2/(4*1.4*10^(-13)*77*60))  };
   \end{axis}
 \end{tikzpicture}
 
 
 \section{Dvipolio tranzistoriaus parametrų skaičiavimas ir ekvivalentinės grandinės schemos sudarymas}
 Pradiniai duomenys:\\
+Tranzistorius įjungtas pagal bendro emiterio schemą\\
 $I_B = 0.14 mA = 0.14 * 10^{-3}$, $U_{CE} = 8V$, $f_{T} = 0.9 GHz = 0.9*10^{9}Hz$;\\
 \subsection{Rasti dvipolio tranzistoriaus $h$ parametrus}
+
+%issiaiskinti kaip padaryti underline
+\[h_{11E} = \frac{U_1}{I_1}|_{U_2 = 0} = \frac{\Delta U_{BE}}{\Delta I_B}|_{U_{KE} = const = U_{KEQ}}\]
+
 \subsection{Sudaryti tranzistoriaus $\Pi$ pavidalo ekvivalentinės grandinės schemą, rasti jos elementų parametrus}
 \subsection{Apskaičiuoti išėjimo srovės kintamąją dedamąją, kai kintamoji įėjimo įtampa yra 115mV}
 \subsection{Rasti žemo dažnio įtampos stiprinimo koeficiantą, kai apkrovos varža lygi 892 $\Omega$ }
