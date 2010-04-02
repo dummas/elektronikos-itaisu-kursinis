@@ -31,7 +31,7 @@
 Difuzija ( log. \emph{diffusio} - sklidimas ) yra kryptingas medžiagos dalelių skverbimasis jų tankio mažėjimo 
 link dėl šių dalelių chaotiško judėjimo. Gaminant puslaidininkinius įtaisus ir puslaidininkinius integrinius grandynus, 
 difuzijos reiškinys panaudojamas puslaidininkiams legiruoti. Aukštoje temperatūroje difuzijos būdu į 
-paviršinį puslaidininkio sluoksnį įterpus priemaišų, galima pakeisti šio sluoksnio laidumo tipą arba sudaryti lokaliąsias kitokio laidumo stiris.
+paviršinį puslaidininkio sluoksnį įterpus priemaišų, galima pakeisti šio sluoksnio laidumo tipą arba sudaryti lokaliąsias kitokio laidumo sritis.
 \subsection{Priemaišų difuzijos mechanizmas ir greitis}
 Šiluminė priemaišų difuzija vyksta dėl difunduojančios medžiagos - difuzanto - koncentracijos gradiento.\\
 Priemaišiniai atomai į kietuosius kūnus gali skverbtis keliais būdais: užimdami vakansijas, prasiskverbdami tarp mazgų ir pasikeisdami vietomis su gretimais atomais.\\
@@ -63,7 +63,7 @@ Imkime ploną sluoksnį $\delta x$ tarp dviejų vienetinio ploto plokštumų, st
 Sakykime, kad priemaišos tankis sluoksnyje laiko momentu $t$ yra $N(x,t)$. Prabėgus laikui $\delta t$, 
 priemaišos tankis tampa $N(x,t+ \delta t)$. Tada priemaišos atomų skaičiaus pokytis nagrinėjamame sluoksnyje per laiką $\delta t$ yra
 \[ [ N (x,t+\delta t ) - N(x,t) ] \delta x = \frac{\delta N(x,t)}{\delta t} \delta t \delta x\]
-Priemaišos tankis kinta todėl, kad priemaišos atomų srautas $J(x,t)$, tekantis į nagrinėjamąjį sluoksnį per 1 plokštymą, 
+Priemaišos tankis kinta todėl, kad priemaišos atomų srautas $J(x,t)$, tekantis į nagrinėjamąjį sluoksnį per 1 plokštumą, 
 skiriasi nuo ištekančio per 2 plokštumą srauto $J(x+\delta x,t)$. Dėl to, kad šie srautai nevienodi, 
 priemaišos atomų skaičiaus pokytį sluoksnyje $\delta x$ per elementarųjį laiką $\delta t$ galima išreikšti formule:
 \[ [J(x,t) - J(x + \delta x,t ) ] \delta t = - \frac{\delta J(x,t)}{\delta x} \delta x \delta t. \]
@@ -219,8 +219,32 @@ Tranzistorius įjungtas pagal bendro emiterio schemą\\
 $I_B = 0.14 mA = 0.14 * 10^{-3}$, $U_{CE} = 8V$, $f_{T} = 0.9 GHz = 0.9*10^{9}Hz$;\\
 \subsection{Rasti dvipolio tranzistoriaus $h$ parametrus}
 
-%issiaiskinti kaip padaryti underline
-\[h_{11E} = \frac{U_1}{I_1}|_{U_2 = 0} = \frac{\Delta U_{BE}}{\Delta I_B}|_{U_{KE} = const = U_{KEQ}}\]
+\[
+h_{11E} = \frac{\underline{U_1}}{\underline{I_1}}|_{\underline{U_2} = 0}
+= \frac{\Delta U_{BE}}{\Delta I_B}|_{U_{KE} = const = U_{KEQ}}
+\]
+
+\[
+h_{11E} = \frac{0.162-0.147}{0.16*10^{-3}-0.14*10^{-3}} = \frac{0.015}{0.02*10^{-3}} = 750 \Omega
+\]
+
+\[
+h_{12E} = \frac{\underline{U_{1}}}{\underline{U_{2}}}|_{\underline{I_{1}} = 0} = \frac{\Delta U_{BE}}{\Delta U_{KE}}|_{I_{B} = const} = \frac{\Delta U_{BE}}{U_{KE3} - U_{KE1}} |_{I_B = I_{BQ}}
+\]
+
+\[
+h_{12E} = \frac{0.162-0.141}{12-4} = \frac{0.021}{8} = 0.002625
+\]
+
+\[
+h_{21E} = \frac{\underline{I_2}}{\underline{I_1}} |_{\underline{U_{2}} = 0} = 
+\frac{\Delta I_{K}}{\Delta I_{B}} |_{U_{KE} = const} = 
+\frac{I_{K3} - I_{K1}}{I_{B3} - I_{B1}} |_{U_{KE} = U_{KEQ}}
+\]
+
+\[
+h_{21E} = \frac{23*10^{-3}-10.5*10^{-3}}{0.18*10^{-3}-0.1*10^{-3}} = \frac{14.5*10^{-3}}{0.08*10^{-3}}
+\]
 
 \subsection{Sudaryti tranzistoriaus $\Pi$ pavidalo ekvivalentinės grandinės schemą, rasti jos elementų parametrus}
 \subsection{Apskaičiuoti išėjimo srovės kintamąją dedamąją, kai kintamoji įėjimo įtampa yra 115mV}
