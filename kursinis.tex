@@ -191,7 +191,7 @@ J(0,t) = N_0*\sqrt{\frac{D}{\pi t}}
       width=400pt,
       height=150pt,
       xlabel=$t$,
-      ylabel=$J(t)$,
+      ylabel={$J(0, t)$},
       grid=major
     ]
     \addplot[smooth] plot function {3*10**(20)*sqrt(1.8*10**(-13)/(3.14*x))};
@@ -384,18 +384,119 @@ C_{\pi} = \frac{0.644}{2 * 3.14 * 0.9*10^{9}} - C_{\mu} = 1.14*10^{-11} - C_{\mu
 \]
 
 \subsection{Apskaičiuoti išėjimo srovės kintamąją dedamąją, kai kintamoji įėjimo įtampa yra 115mV}
-
+% TODO
 \[
 \underline{U}_{BE} = 115mV;
 \]
 
 \subsection{Rasti žemo dažnio įtampos stiprinimo koeficientą, kai apkrovos varža lygi 892 $\Omega$ }
+% TODO
 
 \section{Lauko tranzistoriaus parametrų skaičiavimas ir ekvivalentinės grandinės schemos sudarymas}
 \subsection{Nubraižyti lauko tranzistoriaus perdavimo charkteristikas, kai $U_{DS} = 3,7,11 V$}
+
+\begin{circuitikz}
+  \begin{axis} [
+      scale only axis,
+      width=400pt,
+      height=150pt,
+      ylabel={$I_{S}, mA$},
+      xlabel={$U_{SI}, V$},
+      grid=major,
+      legend pos=south east,
+    ]
+    % 3V
+    \addplot [smooth, mark=x] plot coordinates {
+      (-2,0.7)
+      (-1.5,3.2)
+      (-1,6.8)
+      (-0.5,10.7)
+      (0,15.7)
+    };
+    \addlegendentry{$U_{SI} = 3V$}
+    % 7V
+    \addplot [smooth, mark=o] plot coordinates {
+      (-2,0.7)
+      (-1.5,3.3)
+      (-1,6.85)
+      (-0.5,11.1)
+      (0,16.2)
+    };
+    \addlegendentry{$U_{SI} = 7V$}
+    % 11V
+    \addplot [smooth, mark=*] plot coordinates {
+      (-2,0.7)
+      (-1.5,3.4)
+      (-1,7)
+      (-0.5,11.4)
+      (0,16.8)
+    };
+    \addlegendentry{$U_{SI} = 11V$}
+  \end{axis}
+\end{circuitikz}\\
+\textsl{5.1 pav. Lauko tranzistoriaus perdavimo charakteristikos, kai $U_{SI} = 3V,\;7V,\;11V$.}
+  
+ 
 \subsection{Apskaičiuoti lauko tranzistoriaus parametrus nurodytame darbo taške}
+
+Tranzistoriaus perdavimo charakteristikos statumą nurodytame darbo taške, randame:
+\begin{equation}
+  g_m = S = \frac{\delta I_S}{\delta U_{UI}}
+\end{equation}
+\[
+g_m = S = \frac{16*10^{-3}-6.8*10^{-3}}{1} = 9.2 * 10^{-3} S = 9.2 mS;
+\]
+Tranzistoriau išėjimo (vidinė) varža:
+\begin{equation}
+  r_0 = \frac{\delta U_{SI}}{\delta I_S}
+\end{equation}
+\[
+r_0 = \frac{6-2}{11*10^{-3}-10.2*10^{-3}} = 5k \Omega;
+\]
+
 \subsection{Sudaryti lauko tranzistoriaus ekvivalentinės grandinės schemą}
-\subsection{Apskaičiuoti $f_{T}$, kai $C_{11}$ = 4, $C_{12} = 9$ pF}
+
+\begin{center}
+  \begin{circuitikz}
+    % elements
+    \draw (1,0) to[C, l=$C_{UI}$, *-*] (1,2);
+    \draw (1,2) to[C, l=$C_{US}$, -*] (3,2);
+    \draw (3,0) to[european current source, *-] (3,2);
+    \draw (5,0) to[R, l=$r_0$, *-*] (5,2);
+    \draw (7,0) to[C, l=$C_{SI}$,*-*] (7,2);
+    % vires
+    \draw (-1,0) to[short, *-*] (9,0);
+    \draw (-1,2) to[short, *-, i^=$\underline{I}_U$] (1,2);
+    \draw (9,2) to[short, *-, i_=$\underline{I}_S$] (7,2);
+    \draw (7,2) to[short] (3,2);
+    % nodes
+    \draw (-1,2) node[anchor=east] {$U$};
+    \draw (9,2) node[anchor=west] {$S$};
+    \draw (4,0) node[anchor=north] {$I$};
+    \draw (3,2) node[anchor=south] {$g_m \underline{U}_{UI}$};
+    \draw (-1,0) to[open, v^=$\underline{U}_{UI}$] (-1,2);
+    \draw (9,0) to[open, v_=$\underline{U}_{SI}$] (9,2);
+
+  \end{circuitikz}
+\end{center}
+\textsl{4.1 pav. Lauko tranzistoriaus ekvivalentinės grandinės schema.}
+
+\subsection{Apskaičiuoti $f_{T}$, kai $C_{11}$ = 9, $C_{12} = 4$ pF}
+Dažniui, kuriam esant tranzistorius nustoja stiprinti srovę, randamas pasitelkant tokią išraišką:
+\begin{equation}
+  f_T = \frac{g_m}{2\pi ( C_{UI}+C_{US})};
+\end{equation}
+\[
+C_{US} =  C_{12} = 4 pF;
+\]
+\[
+C_{11} = C_{UI} + C_{US};\;C_{UI} = C_{11} - C_{12} = 9 - 4 = 5 pF;
+\]
+
+\[
+f_T = \frac{9*10^{-3}}{2*3.14*(5*10^{-12}+4*10^{-12})} = 1.59 * 10^{8} Hz = 159 MHz;
+\]
+
 \subsection{Apskaičiuoti kintamąją išėjimo srovės dedamąją, kai kintamosios įėjimo įtampos amplitudė yra 135 mV}
 \subsection{Rasti žemo dažnio įtampos stiprinimo koeficientą, kai apkrovos varža lygi 621 $\Omega$}
 
