@@ -5,6 +5,7 @@
 \usepackage[lithuanian]{babel}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage{graphics}
 \usepackage{latexsym}
 \usepackage{amsmath, amssymb}
 \usepackage[europeanresistors]{circuitikz}
@@ -260,8 +261,8 @@ N(x,t') = \frac{Q}{\sqrt{\pi D' t'}} exp \left( - \frac{x^2}{4D't'} \right)
 \end{tabular}\\\\\\
 % Dvikartė difuzija
 % Bazes difuzija
-\begin{tikzpicture}[domain=0:0.005]
-  \begin{axis} [
+\begin{tikzpicture}
+  \begin{semilogyaxis} [
       scale only axis,
       width=400pt,
       height=150pt,
@@ -269,14 +270,12 @@ N(x,t') = \frac{Q}{\sqrt{\pi D' t'}} exp \left( - \frac{x^2}{4D't'} \right)
       xlabel=$$,
       grid=major
     ]
-    % Q = N_0 * \sqrt{ \pi D1 t1 }
-    %                                              Q
-    %\addplot[smooth] plot function{ ( 2.5*10^(19) * sqrt(pi*1.9*10^(-13)*24*60) ) };
-    % Priemaišos pasiskirstymo stadija  N(x,t')
-    % TODO
-    \addplot[smooth] plot function{ (2.5*10^(19)*sqrt(pi*1.9*10^(-13)*24*60))/sqrt(pi*1.4*10^(-13)*77*60)*exp(-x^2/(4*1.4*10^(-13)*77*60))  };
-  \end{axis}
+		%TODO
+		\addplot[smooth] file {dvitakte_difuzija.plt};
+		
+  \end{semilogyaxis}
 \end{tikzpicture}\\
+
 \textsl{3.5 pav. Priemaišų pasiskirstymas tranzistoriuje, formuojame dvikartės difuzijos būdu.}
 
 \section{Dvipolio tranzistoriaus parametrų skaičiavimas ir ekvivalentinės grandinės schemos sudarymas}
@@ -312,11 +311,9 @@ Randame išėjimo laidumą:
 \begin{equation}
 h_{22E} = \frac{\underline{I}_2}{\underline{U}_2} |_{\underline{I_1} = 0} = \frac{\Delta I_K}{\Delta U_{KE}} |_{I_B = const = I_{BQ}}
 \end{equation}
-
 \[
 h_{22E} = \frac{15.9*10^{-3}-16.1*10^{-3}}{14-12} = \frac{0.2*10^{-3}}{2} = 0.1*10^{-3} S = 0.1 mS;
 \]
-
 
 \subsection{Sudaryti tranzistoriaus $\Pi$ pavidalo ekvivalentinės grandinės schemą, rasti jos elementų parametrus}
 
@@ -384,14 +381,38 @@ C_{\pi} = \frac{0.644}{2 * 3.14 * 0.9*10^{9}} - C_{\mu} = 1.14*10^{-11} - C_{\mu
 \]
 
 \subsection{Apskaičiuoti išėjimo srovės kintamąją dedamąją, kai kintamoji įėjimo įtampa yra 115mV}
-% TODO
+Kintamoji įėjimo įtampa:
 \[
 \underline{U}_{BE} = 115mV;
 \]
+Išėjimo srovės kintamąji dedamoji grandinėje yra lygti srovės šaltiniui atstojamojoje grandinėje, todėl:
+\begin{equation}
+	\underline{I}_{K} = g_m \underline{U}_{\pi};
+\end{equation}
+$U_{\pi}$ galime rasti
+\begin{equation}
+	U_{\pi} = \frac{r_{\pi}}{r_{\pi}+r_{B}^*} * \underline{U}_{BE} = \frac{r_{\pi}}{h_{11E}} * \underline{U}_{BE};
+\end{equation}
+Tuomet ankstesnį reiškinį galime pertvarkyti taip:
+\[
+	\underline{I}_{K} = g_m \frac{r_{\pi}}{h_{11E}} * \underline{U}_{BE};
+\]
+Apskaičiuojame:
+\[
+	\underline{I}_{K} = 0.644 * \frac{281.4}{750} * 115*10^{-3} = 27.8 mA;
+\]
 
 \subsection{Rasti žemo dažnio įtampos stiprinimo koeficientą, kai apkrovos varža lygi 892 $\Omega$ }
-% TODO
-
+Apkrovos varža:
+\[R_a = 892 \Omega\]
+Įtampos stiprinimo koeficientą randame iš tokios formulės:
+\begin{equation}
+	K_U = \frac{\beta * R_a}{h_{11E}} = \frac{h_{21E} * R_a}{h_{11E}};
+\end{equation}
+Apskaičiuojame:
+\[
+	K_U = \frac{ 181.25 * 892 }{750} = 215.57
+\]
 \section{Lauko tranzistoriaus parametrų skaičiavimas ir ekvivalentinės grandinės schemos sudarymas}
 \subsection{Nubraižyti lauko tranzistoriaus perdavimo charkteristikas, kai $U_{DS} = 3,7,11 V$}
 
@@ -401,7 +422,7 @@ C_{\pi} = \frac{0.644}{2 * 3.14 * 0.9*10^{9}} - C_{\mu} = 1.14*10^{-11} - C_{\mu
       width=400pt,
       height=150pt,
       ylabel={$I_{S}, mA$},
-      xlabel={$U_{SI}, V$},
+      xlabel={$U_{UI}, V$},
       grid=major,
       legend pos=south east,
     ]
@@ -479,7 +500,7 @@ r_0 = \frac{6-2}{11*10^{-3}-10.2*10^{-3}} = 5k \Omega;
 
   \end{circuitikz}
 \end{center}
-\textsl{4.1 pav. Lauko tranzistoriaus ekvivalentinės grandinės schema.}
+\textsl{5.2 pav. Lauko tranzistoriaus ekvivalentinės grandinės schema.}
 
 \subsection{Apskaičiuoti $f_{T}$, kai $C_{11}$ = 9, $C_{12} = 4$ pF}
 Dažniui, kuriam esant tranzistorius nustoja stiprinti srovę, randamas pasitelkant tokią išraišką:
@@ -498,9 +519,44 @@ f_T = \frac{9*10^{-3}}{2*3.14*(5*10^{-12}+4*10^{-12})} = 1.59 * 10^{8} Hz = 159 
 \]
 
 \subsection{Apskaičiuoti kintamąją išėjimo srovės dedamąją, kai kintamosios įėjimo įtampos amplitudė yra 135 mV}
+
+Kintamoji įtampos amplitudė:
+\[
+	\underline{U}_{UI} = 135mV;
+\]
+Kintamosios išėjimo srovės dedamoji $\underline{I}_{S}$ randama:
+\begin{equation}
+	\underline{I}_{S} = g_m \underline{U}_{UI}
+\end{equation}
+Apskaičiuojame:
+\[
+	\underline{I}_{S} = 9.2*10^{-3} * 135*10^{-3} = 1.24 mA;
+\]
+
 \subsection{Rasti žemo dažnio įtampos stiprinimo koeficientą, kai apkrovos varža lygi 621 $\Omega$}
 
+Apkrovos varža:
+\[
+R_a = 621 \Omega
+\]
+Žemo dažnio įtampos stiprinimo koeficientas išreiškiamas:
+\begin{equation}
+	K_U = \frac{R_a * I_S}{U_{UI}}
+\end{equation}
+Žinant išėjimo srovę ir įėjimo įtampos vertes iš prieš tai buvusios užduoties
+\[
+I_S = 1.24 mA;
+\]
+\[
+U_{UI} = 135 mV;
+\]
+Apskaičiuojame:
+\[
+	K_U = \frac{621 * 1.24*10^{-3}}{135 *10^{-3}} = 5.7
+\]
+
 \section{Akustinės elektronikos įtaiso projektavimas}
+%TODO
 Pradiniai duomenys:\\
 Centrinis pralaidumo juostos dažnis (MHz): 100\\
 Pralaidumo juostos plotis (MHz): 8
