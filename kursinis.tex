@@ -1,15 +1,18 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage[left=20mm,right=15mm,top=15mm,bottom=15mm]{geometry}
-\usepackage[utf8x]{inputenc}
+\usepackage[left=25mm,right=15mm,top=15mm,bottom=15mm]{geometry}
 \usepackage[L7x]{fontenc}
+\usepackage[utf8x]{inputenc}
 \usepackage[lithuanian]{babel}
+\usepackage{./cyrillic}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{graphics}
 \usepackage{latexsym}
 \usepackage{amsmath, amssymb}
-\usepackage[europeanresistors]{circuitikz}
-\pgfplotsset{compat=newest}
+\usepackage[europeanresistor]{circuitikz}
+%% Crylic fonts
+\newcommand{\cyrrm}{\fontencoding{OT2}\selectfont\textcyrup}
+
 \begin{document}
 \begin{titlepage}
   
@@ -31,6 +34,37 @@
 \tableofcontents
 \newpage
 \section{Įvadas}
+
+Svarbiausieji šiuolaikinės elektroninės aparatūros komponentai yra silicio integriniai grandynai. Jų elementai 
+ir juos jungiantys laidieji takeliai suformuojami vienu technologinių procesų ciklu ir sudaro nedalomą visumą.\\
+
+Silicio integrinių grandynų gamybos technologinius procesus galima suskirstyti į tris grupes:
+\begin{itemize}
+	\item Silicio plokštelių bei grandynų korpusų detalių ir mazgų gamybos procesai.
+	\item Puslaidininkių elementų formavimo silicio plokštelėse procesai.
+	\item Integrinių grandynų surinkimo, kontrolės ir bandymo procesai.
+\end{itemize}
+
+Analizuojant tranzistorinius stiprintuvus ir kitus įtaisus, tranzistoriai pakeičiami ekvivalentinėmis grandinėmis. 
+Viena ar kita ekvivalentinė grandinė pasirenkama, atsižvelgiant į tai, koks klausimas nagrinėjamas.\\
+
+Kai nagrinėjamas tik silpnų virpesių perdavimas, nepaisoma tranzistoriaus įtampų ir srovių nuolatinių dedamųjų. 
+Tada tranzistoriaus ekvivalentinės grandinės sudaromos remiantis lygtimis, aprašančiomis tranzistorių kaip tiesinį 
+aktyvųjį keturpolį. Dažniausiai naudojamos $T$ ir $\Pi$ pavidalo ekvivalentinės grandinės.\\
+
+Didėjant integrinių grandynų integracijos laipsniui, mažėja elektroninės aparatūros masė, tūris, savikaina, didėja jos patikimumas, 
+plečiasi funkcinės galimybės. Kita vertus, integriniuose grandynuose dažniiausiai realizuojami tik tranzistoriai, diodai, rezistoriai 
+ir nedidelės talpos kondensatoriai.\\
+
+Nuo tada, kai buvo sukurti integriniai grandynai, iškilo filtrų, vėlinimo linijų ir kitų komponentų, kuriems reikalingi 
+induktyvumo elementai, miniatiūrizavimo problema. Sprendžiant šią problemą, buvo tobulinami aktyvieji filtrai, 
+komutuojamos talpos filtrai, diegiami skaitmeniniai informacijos apdorojimo būdai. Be to, virpesių 
+filtravimui ir vėlinimui buvo pradėtos taikyti paviršinės akustinės bangos, ir susiformavimo nauja funkcinės elektronikos 
+kryptis - akustinė elektronika.\\
+
+Kursinio darbo metu ištirsine terminės difuzijos procesą, kuris taikomas antrame silicio integrinių grandynų 
+gamybos technologiniam procese, sudarysim tranzistorių ekvivalentinų grandinių schemas ir suprojektuosime akustoelektronikos įtaisą.\\
+
 \section{Šiluminė priemaišų difuzija}
 Difuzija ( log. \emph{diffusio} - sklidimas ) yra kryptingas medžiagos dalelių skverbimasis jų tankio mažėjimo 
 link dėl šių dalelių chaotiško judėjimo. Gaminant puslaidininkinius įtaisus ir puslaidininkinius integrinius grandynus, 
@@ -38,35 +72,45 @@ difuzijos reiškinys panaudojamas puslaidininkiams legiruoti. Aukštoje temperat
 paviršinį puslaidininkio sluoksnį įterpus priemaišų, galima pakeisti šio sluoksnio laidumo tipą arba sudaryti lokaliąsias kitokio laidumo sritis.
 \subsection{Priemaišų difuzijos mechanizmas ir greitis}
 Šiluminė priemaišų difuzija vyksta dėl difunduojančios medžiagos - difuzanto - koncentracijos gradiento.\\
+
 Priemaišiniai atomai į kietuosius kūnus gali skverbtis keliais būdais: užimdami vakansijas, prasiskverbdami tarp mazgų ir pasikeisdami vietomis su gretimais atomais.\\
+
 Tikimiausias yra pirmasis priemaišų atomų difuzijos mechanizmas, nes aukštoje temperatūroje vakansijų gali būti gana daug. 
 Jos atsiranda kaip Šotkio arba Frenkelio defektai. Kylant temperatūrai, vakansijų tankis auga, priemaišinių atomų skverbimosi per 
 vakansijas tikimybė didėja. Beje, didėjant prasiskverbusių į padėklą priemaišų tankiui ir dėl to mažėjant vakansijų tankiui, svarbesnis 
 tampa antrasis priemaišų skverbimosi kelias - per tarpmazgius. Mažiausiai tikėtinas trečiasis priemaišinių atomų skverbimosi būdas, nes 
 gretimi atomai gardelės mazguose gali pasikeisti vietomis tik įgiję gana daug energijos.\\
+
 Difuzijos proceso greitį apibūdina difuzijos koeficientas. Šiluminės priemaišų difuzijos koeficientas $D$ paprastai išreiškiamas 
 kvadratiniais centimetrais per sekundę ($cm^2/s$). Jo skaitinę vertę reiškia skaičių dalelių, pereinančių per $1\;cm^2$ plotą 
 per $1\;s$, kai priemaišos atomų tankio gradientas lygus $1\;cm^{-4}$.\\
+
 Difuzijos koeficientas labai priklauso nuo temperatūros. Jai kylant, difuzijos koeficientas sparčiai didėja. 
 Priklausomybė $D(T)$ išreiškiama Arenijaus ($Arrhenius$) lygtimi:\\
+
 \begin{equation}
   D = D_0 e^{-W_a/kT};
 \end{equation}
 čia $D_0$ - proporcingumo koeficientas; $W_a$ - difuzijos proceso aktyvacijos energija; $k$ - Bolcmano konstanta; $T$ - difuzijos proceso temperatūra.\\
+
 Koeficientas $D_0$ priklauso nuo puslaidininkio ir priemaišos tipo, kristalo-grafinės krypties, 
 kuri vyksta difuzija, ir pradinio priemaišų tankio. Aktyvacijos energija $W_a$ priklauso nuo puslaidininkio, 
 priemaišos tipo ir difuzijos mechanizmo. Jei į silicį difunduoja boras, tai $W_a \approx 3,7$ eV, jei fosforas, - 4,4 eV.\\
+
 Kadangi koeficientas $D_0$ ir aktyvacijos energijos energija $W_a$ priklauso nuo daugelio veiksnių, 
 tai ankstesnė lygtis gerai tinka tik difuzijos koeficiento $D$ priklausomybių nuo $T$ ir $W_a$ pobūdžiui išreikšti. 
 Praktikoje priemaišos difuzijos koeficientas randamas iš literatūroje pateikiamų grafikų, sudarytų remiantis eksperimentų rezultatais.
 \subsection{Difuzijos procesų teorija}
 Difuzijos teorija pagrįsta dviem dėsniais, kuriuos 1855 m. suformulavo šveicarų mokslininkas A.Fikas (\emph{Fick}).\\
+
 Taikydami pirmą difuzijos dėsnį priemaišų difuzijai ir laikydami, kad priemaišiniai atomai skverbiasi į kristalą $x$ ašies kryptimi, galime rašyti:
 \begin{equation} 
   J(x,t) = - D \frac{\delta N(x,t)}{\delta x}
 \end{equation}
 čia $J$ - priemaišos atomų srauto tankis, $N$ - priemaišos atomų tankis, $t$ - laikas.\\
+
 Antro Fiko dėsnio matematinę ištaišką galima išvesti remiantis pirmuoju dėsniu.\\
+
 Imkime ploną sluoksnį $\delta x$ tarp dviejų vienetinio ploto plokštumų, statmenų difuzinio srauto krypčiai. 
 Sakykime, kad priemaišos tankis sluoksnyje laiko momentu $t$ yra $N(x,t)$. Prabėgus laikui $\delta t$, 
 priemaišos tankis tampa $N(x,t+ \delta t)$. Tada priemaišos atomų skaičiaus pokytis nagrinėjamame sluoksnyje per laiką $\delta t$ yra
@@ -88,10 +132,13 @@ Sulyginę ankstesnes dvi formules, gauname:
 \frac{\delta N(x,t)}{\delta t} = D \frac{\delta^2 N(x,t)}{\delta x^2} 
 \end{equation}
 Ši lygtis aprašo primaišos kaupimosi greitį. Ja naudojantis galima nagrinėti difuzijos proceso dinamiką.\\
+
 Išsprendus antro Fiko dėsnio lygti, randama priemaišos tankio priklausomybė nuo difuzijos trukmės ir koordinatės, 
 taigi galima apskaičiuoti priemaišos pasiskirstymą kristale bet kuriuo laiko momentu. 
 Priemaišos tankio priklausomybė nuo koordinatės vadinama koncentracijos profiliu, arba legiravimo profiliu.\\
+
 Praktikoje pasitaikančias priemaišų difuzijos sąlygas gana greitai atitinka du paprasti teoriniai modeliai: difuzija iš nesenkančio šaltinio ir difuzija iš riboto šaltinio.\\
+
 Laikoma, kad difuzijos šaltinis yra nesenkantis, jeigu priemaišos atomų tankis kristalo paviršiuje nekinta - jeigu $N(0,t) = N_0 = const$, 
 kai $t \geq 0$. Atsižvelgus į pradinę sąlygą $N(x,t) = 0$, kai $x \geq 0 $ ir $t=0$, bei ribinę sąlygą $N(x,t)=0$, 
 kai $x \rightarrow \infty$ ir $t \geq 0$, gaunamas toks antrosios Fiko diferencialinės lygties sprendinys:
@@ -104,7 +151,9 @@ erfc(y) = 1 - \frac{2}{\sqrt{\pi}} \int^y_0 exp(-y^2) \delta y
 \end{equation}
 Dydis $\sqrt{Dt}$ vadinamas difuzijos nuotoliu.\\
 Pagal $N(x,t)$ išraišką, priemaišos atomų tankio pasiskirstymą lemia difuzijos koeficientas $D$ ( proceso temperatūra T ) ir difuzijos proceso trukmė $t$. Vykstant difuzijai iš nesenkančio šaltinio, didesniame gylyje priemaišos tankis yra mažesnis. Tam tikrame gylyje, kol vyksta difuzija, priemaišos atomų tankis didėja. Jei difuzijos procesas vyktų pakankamai ilgai, priemaišos atomų tankis bet kuriame gylyje taptų toks, kaip paviršiuje.\\
+
 Nuo difuzijos proceso temperatūros ir trukmės priklauso ir legiravimo dozė $Q$ -  skaičius priemaišos atomų, perėjusių per vienetinį padėklo paviršiaus plotą per difuzijos laiką $t$.\\
+
 Žinodami $N(x,t)$, galime rasti difuzijos srauto tankį. Taikydami pirmajį Fiko dėsnį, galime rašyti:
 \begin{equation} 
 J(0,t) = - D\frac{\delta N(x,t)}{\delta x}|_{x=0}
@@ -118,15 +167,21 @@ Suintegravę priemaišos atomų srautą per vienetinio ploto padėklo paviršių
 Q(t) = \int^{t}_{0}J(0,t)\delta t = ... = 2N_0 \sqrt{\frac{Dt}{\pi}} 
 \end{equation}
 Praktikoje šiluminės priemaišų difuzijos procesą dažniausiai sudaro dvi stadijas. Difuzija iš nesenkančio šaltinio vyksta pirmojoje - \emph{priemaišų įterpimo} stadijoje. Šioje stadijoje į ploną paviršinį kristalo sluoksnį įterpiamas reikiamas priemaišos kiekis. Antrojoje - \emph{priemaišų perskirstymo} stadijoje - aukštesnėje temperatūroje suformuojamas legiravimo profilis.\\
+
 Dažnai antrojoje difuzijos stadijoje atliekamas ir paviršiaus oksidavimas. Todėl antrojoje stadijoje priemaišiniai atomai per padėklo paviršių neprasiskverbia ir legiravimo dozė nekinta. Tada difuzija vyksta iš riboto šaltinio - iš pirmojoje stadijoje legiruoto paviršinio sluoksnio. Šiomis sąlygomis antrosios Fiko diferencialinės lygties sprendinys išreiškiamas formule:
 \begin{equation}
 N(x,t') = \frac{Q}{\sqrt{\pi D't'}} exp \left (-\frac{x^2}{4D't'} \right ) 
 \end{equation}
 čia $D'$ - priemaišos difuzijos koeficientas priemaišų perskirstymo etape, t' - šio etapo trukmė.\\
+
 Pastaroji formulė atitinka Gauso ( Gauss ), arba normalųjį, pasiskirstymą. Kreivių parametras yra difuzijos koeficiento ir proceso trukmės sandauga. Pradžioje ( kai $D't' = 0$ ) priemaišos atomų tankis padėklo paviršiuje paprastai atitinka ribinį priemaišos tirpumą. Didėjant sandaugai $D't'$, priemaišiniai atomai iš paviršinio sluoksnio skverbiasi gilyn į padėklą. Todėl prie padėklo paviršiaus priemaišos tankis mažėja, padėklo gilumoje - didėja. Kreivių ribojamas plotas nekinta, nes nekinta legiravimo dozė.\\
+
 Remiantis gautomis išraiškomis, galima teoriškai parinkti šiluminės priemaišų difuzijos procesų sąlygas.\\
-Sakykime, kad į padėklą, kuriame pradinis priemaišos atomų tanki $N_{pr}$, atliekama kito tipo priemaišos šiluminė difuzija. Po antrosios difuzijos stadijos padėklo paviršiuje reikia gauti difunduojančios priemaišos atomų tankį $N_0$. Kito laidumo tipo difuzinio sluoksnio storis (pn sandūros gylis) turi būti $x_{pn}$.\\
-Pagal suformuluotą užduotį turi būti tenkinamos sąlygos $N(0,t) = N_0$ ir $N(x_{pn},t) = N_{pr}$. Pasinaudoję šiomis sąlygomis, gauname:\\
+
+Sakykime, kad į padėklą, kuriame pradinis priemaišos atomų tanki $N_{pr}$, atliekama kito tipo priemaišos šiluminė difuzija. Po antrosios difuzijos stadijos padėklo paviršiuje reikia gauti difunduojančios priemaišos atomų tankį
+ $N_0$. Kito laidumo tipo difuzinio sluoksnio storis (pn sandūros gylis) turi būti $x_{pn}$.\\
+ 
+Pagal suformuluotą užduotį turi būti tenkinamos sąlygos $N(0,t) = N_0$ ir $N(x_{pn},t) = N_{pr}$. Pasinaudoję šiomis sąlygomis, gauname:
 \begin{equation}
 N_0 = \frac{Q}{\sqrt{\pi D't'}}
 \end{equation}
@@ -157,6 +212,7 @@ N(x,t) = N_0 erfc\frac{x}{2 \sqrt{Dt}}
 Pradiniai duomenys:\\
 Difuzijos koeficienas ($cm^2/s$): $D = 1.8*10^{-13}$\\
 Proceso trukmės: $t_1 = 13min = 780s, t_2 = 18min = 1080s$ ir $t_3 = 22min = 1320s$.\\
+
 Difuzija iš nesenkančio šaltinio vyksta pirmojoje - priemaišų įterpimo stadijoje. Jos pasisskirstymas randamas, pasitelkus:
 \begin{equation}
 N(x,t) = N_0*erfc \left( \frac{x}{x\sqrt{Dt}} \right) 
@@ -166,8 +222,8 @@ N(x,t) = N_0*erfc \left( \frac{x}{x\sqrt{Dt}} \right)
       scale only axis,
       width=400pt,
       height=150pt,
-      xlabel=$x$,
-      ylabel=$N(x)/N_0$,
+      xlabel={$x$},
+      ylabel={$N(x)/N_0$},
       grid=major]
     \addplot[smooth, mark=*] plot function {erfc(x/(2*sqrt(1.8*10**(-13)*780)))};
     \addlegendentry{$t_1$}
@@ -234,18 +290,18 @@ N(x,t') = \frac{Q}{\sqrt{\pi D' t'}} exp \left( - \frac{x^2}{4D't'} \right)
       width=400pt,
       height=150pt,
       xlabel=$x$,
-      grid=major
+      grid=major,
     ]
     % Q/sqrt(pi*D'*t')*exp(-(x^2)/(4*D't'))
-    \addplot[smooth,mark=*] plot function{ (1.4*10**(13)/(sqrt(pi*1.8*10**(-13)))*exp(-(x**2)/(4*1.8*10**(-13)*4860))) };
+    \addplot[smooth,mark=*] plot gnuplot { (1.4*10**(13)/(sqrt(pi*1.8*10**(-13)))*exp(-(x**2)/(4*1.8*10**(-13)*4860))) };
     \addlegendentry{$t_1$}
-    \addplot[smooth,mark=o] plot function{ (1.4*10**(13)/(sqrt(pi*1.8*10**(-13)))*exp(-(x**2)/(4*1.8*10**(-13)*4200))) };
+    \addplot[smooth,mark=o] plot gnuplot { (1.4*10**(13)/(sqrt(pi*1.8*10**(-13)))*exp(-(x**2)/(4*1.8*10**(-13)*4200))) };
     \addlegendentry{$t_2$}
-    \addplot[smooth,mark=x] plot function{ (1.4*10**(13)/(sqrt(pi*1.8*10**(-13)))*exp(-(x**2)/(4*1.8*10**(-13)*1260))) };
+    \addplot[smooth,mark=x] plot gnuplot { (1.4*10**(13)/(sqrt(pi*1.8*10**(-13)))*exp(-(x**2)/(4*1.8*10**(-13)*1260))) };
     \addlegendentry{$t_3$}
   \end{axis}
 \end{tikzpicture}\\
-\textsl{3.4 pav.  Priemaišų pasiskirstymas po priemaitų perskirstymo etapo.}
+\textsl{3.4 pav.  Priemaišų pasiskirstymas po priemaišų perskirstymo etapo.}
 
 \subsection{Apskaičiuoti ir nubraižyti priemaišų pasiskirstymą tranzistoriuje, formuojamame dvikartės difuzijos būdu}
 
@@ -265,9 +321,10 @@ N(x,t') = \frac{Q}{\sqrt{\pi D' t'}} exp \left( - \frac{x^2}{4D't'} \right)
   \begin{semilogyaxis} [
       scale only axis,
       width=400pt,
+      domain=-1:1,
       height=150pt,
-      ylabel=$$,
-      xlabel=$$,
+      ylabel={$log10(N_D-N_A), 1/cm^3$},
+      xlabel={$x, mkm$},
       grid=major
     ]
 		%TODO
@@ -281,12 +338,12 @@ N(x,t') = \frac{Q}{\sqrt{\pi D' t'}} exp \left( - \frac{x^2}{4D't'} \right)
 \section{Dvipolio tranzistoriaus parametrų skaičiavimas ir ekvivalentinės grandinės schemos sudarymas}
 Pradiniai duomenys:\\
 Tranzistorius įjungtas pagal bendro emiterio schemą\\
-$I_B = 0.14 mA = 0.14 * 10^{-3}$, $U_{CE} = 8V$, $f_{T} = 0.9 GHz = 0.9*10^{9}Hz$;\\
+$I_B = 0.14 mA$, $U_{CE} = 8V$, $f_{T} = 0.9 GHz$;\\
 \subsection{Rasti dvipolio tranzistoriaus $h$ parametrus}
 Randame tranzistoriaus įėjimo varžą:
 \begin{equation}
 h_{11E} = \frac{\underline{U}_1}{\underline{I}_1}|_{\underline{U_2} = 0}
-= \frac{\Delta U_{BE}}{\Delta I_B}|_{U_{KE} = const = U_{KEQ}}
+= \frac{\Delta U_{BE}}{\Delta I_B}| _{U_{KE} = const = U_{KEQ}}
 \end{equation}
 \[
 h_{11E} = \frac{0.162-0.147}{0.16*10^{-3}-0.14*10^{-3}} = \frac{0.015}{0.02*10^{-3}} = 750 \Omega
@@ -414,6 +471,9 @@ Apskaičiuojame:
 	K_U = \frac{ 181.25 * 892 }{750} = 215.57
 \]
 \section{Lauko tranzistoriaus parametrų skaičiavimas ir ekvivalentinės grandinės schemos sudarymas}
+
+Dranzistoriaus darbo taškas $U_{UI} = 0.5 V$, $U_{SI} = 5 V$.
+
 \subsection{Nubraižyti lauko tranzistoriaus perdavimo charkteristikas, kai $U_{DS} = 3,7,11 V$}
 
 \begin{circuitikz}
@@ -424,7 +484,7 @@ Apskaičiuojame:
       ylabel={$I_{S}, mA$},
       xlabel={$U_{UI}, V$},
       grid=major,
-      legend pos=south east,
+      legend style={anchor=south west},
     ]
     % 3V
     \addplot [smooth, mark=x] plot coordinates {
@@ -467,7 +527,7 @@ Tranzistoriaus perdavimo charakteristikos statumą nurodytame darbo taške, rand
 \[
 g_m = S = \frac{16*10^{-3}-6.8*10^{-3}}{1} = 9.2 * 10^{-3} S = 9.2 mS;
 \]
-Tranzistoriau išėjimo (vidinė) varža:
+Tranzistoriaus išėjimo (vidinė) varža:
 \begin{equation}
   r_0 = \frac{\delta U_{SI}}{\delta I_S}
 \end{equation}
@@ -557,8 +617,154 @@ Apskaičiuojame:
 
 \section{Akustinės elektronikos įtaiso projektavimas}
 %TODO
-Pradiniai duomenys:\\
-Centrinis pralaidumo juostos dažnis (MHz): 100\\
-Pralaidumo juostos plotis (MHz): 8
+% viską skaičiuojam su metrais
+Paviršinių akustinių bangų filtro projektinių skaičiavimų metodika priklauso nuo filtrui keliamų reikalavimų. 
+Aptarsime paprasčiausio filto, kuriam tinka vienodi neapodizuoti paviršinių akustinių bangų keitikliai, 
+projektinių skaičiavimų metodiką. Projektinių skaičiavimų užduotyje nurodytas centrinis pralaidumo 
+juostos dažnis $f_{0} = 100 MHz$ ir pralaidumo juostos plotis $\delta F = 8MHz$. Projektavimo skaičiavimo 
+tikslas - nustatyti svarbiausius filtro matmenis ir patikrinti, ar filtro dažninės charakteristikos 
+tenkina jam keliamus reikalavimus.
+Įvertinus, kad filtre yra du vienodi keitikliai, keitiklio strypų skaičius $N$ randamas pagal formulę:
+\begin{equation}
+	N = \frac { 2 \alpha f_{0}  }{\delta F};
+\end{equation}
+čia $\alpha$ - koeficientas tarp 0.6 ir 0.8. Paimkime $\alpha = 0.8$.
+\[
+	N = \frac{ 2 * 0.8 * 100*10^{6} }{8*10^{6}} = 20;
+\]
+
+Siekiant užtikrinti minimalų filtro slopinimą, jo pagrindo medžiaga parenkama tokia, kad optimalus keitiklio strypų skaičius $N_{opt}$ 
+būtų artimas $N$. Optimalus strypų skaičius randamas pagal formulę:
+\begin{equation}
+N_{opt} =  \sqrt{\frac{\pi}{k_{m}^2}}
+\end{equation}
+Iš šios lygybės išsivedame mums dominanti elektromechaninio ryšio koeficientą $k_m^2$ ir gauname:
+\[
+	k_m^2 = \frac{\pi}{N^2} = \frac{3.14}{20^2} = 0.00785;
+\]
+Pasižiūrėję į pjezoelektrinių medžiagų parametrų lentelę, galima įsitikinti, kad mums atima medžiaga yra 
+Bismuto germanatas su (001) [110] orientacija.\\
+Iš lentelės sužinome 
+\[
+	k_m^2 = 0.0085;
+\]
+PAB greitį:
+\[
+	v_s = 1.624 km/s;
+\]
+Santykinę dielektrinę skvarbą:
+\[
+	\varepsilon _{T} = 43.6;
+\]
+Panaudoję kompiuterinę programą \textsl{pab.M} apskaičiuojame reikalingus parametrus.\\
+Gauname, kas optimalus strypų skaičius $N_0$ yra
+\[
+	N_0 = 19.225;
+\]
+Pasirinkę keitiklio strypų skaičių $N = 19$, gauname išderinimo koeficientą P:
+\[
+	P = 1.0238;
+\]
+Keitiklio strypų žingsnį H:
+\[
+	H = 0.00812 mm;
+\]
+Strypo plotis D:
+\[
+	D = 0.00406 mm;
+\]
+Keitiklio ilgis ALK:
+\[
+	ALK = 0.15022 mm;
+\]
+Minimali keitiklio apertūra $W_{min}$ (mm):
+\[
+	W_{min} = 0.40299;
+\]
+Pasirinkę apertūros ilgį $W = 2 mm$ ir nuo garsolaidžio galo pasirinkę atstumą $L = 7\;mm$, gauname garslolaidžio plotį: $16.016 mm$;\\
+Garsolaidžio ilgis: $L_k = 24.3 mm$;\\
+Atstumas tarp keitiklių: $10 mm$;\\
+Slopinimas: $6.0218 dB$;\\
+Atspindančios bangos lygis: $12.247 dB$;\\
+Statinė keitiklio talpa $C_0 = 7.4995 pF$;\\
+Spinduliavimo varža $R_0 = 21.819 \Omega $;\\
+Suderinimo induktyvumas $L = 0.33776 mkH$;\\
+Apkrovos varža $R = 22.339 \Omega$;\\
+
+
+Programa nubaižė tokią DACh:\\
+% DACh DONE
+\begin{tikzpicture}
+  \begin{axis} [
+      scale only axis,
+      width=400pt,
+      height=150pt,
+      xlabel={$f,Hz$},
+      ylabel={$K(w),dB$},
+      grid=major
+    ]
+		\addplot[smooth] file {PAB.plt};
+		
+  \end{axis}
+\end{tikzpicture}\\
+\textsl{6.1 pav. Akustinio elektronikos filtro DACh.}\\
+
+\begin{center}
+\includegraphics[width=400pt]{jungimo_schema.png}
+\end{center}
+\textsl{6.2 pav. Akustinio elektrinikos įtaiso jungimo schema.}\\
+
+\begin{center}
+\includegraphics[width=400pt,height=150pt]{keitiklio_eskizas.png}
+\end{center}
+\textsl{6.2 pav. Akustinio elektrinikos įtaiso keitiklio eskizas.}\\
+
+Aptarta projektinių skaičiavimų metodika pagrįsta papraščiausiais keitiklių ir filtrų modeliais ir gali būti panaudojama 
+orientaciniams skaičiavimams atlikti eskizinio projektavimo etape. Specialioje literatūroje galima rasti tobulesnius paviršinių 
+akustinių bangų įtaisų modelius.
+
+\section{Išvados}
+
+Kursinio darbo metu ištyrėme terminės difuzijos procesą, kuris taikomas antrame silicion integrinių grandynų 
+gamybos technologiniam procese, sudarėme tranzistorių ekvivalentinių grandinių schemas ir apskaičiavome jų parametrus. 
+Suprojektavome akustoelektronikos įtaisą.\\
+
+Ištyrę priemaišų pasiskirstymą po priemaišų įterpimo etapo iš grafiko galima pastebėti, jog, didinat proceso 
+trukmę, galima padidinti priemaišos koncentraciją netoli bandinio paviršiaus. Iš priemaišos srauto tankio pokyčio, 
+priemaišų įterpimo etape grafiko galima pamatyti, kad pradiniu laiko momentu priemaišos srauto tankio pokytis 
+kinta tiesiškai priemaišos srauto tankio pokyčio didėjimo linkme ir didėjant laikui jis pradeda mažėti. Iš legiravimo 
+dozės pokyčio, piemaišų įterpimo etape, grafiko galima pasakyti, jog kintant laikui legiravimo dozės pokytis didėje beveik tiesiškai 
+didėjimo linkme. Nagrinėdami priemaišų pasiskirstymą po priemaišų perskirstymo etapo, didinant proceso trukmės laiką, 
+galima sumažinti priemaišos koncentracija netoli paviršiaus staigiau. Iš priemaišos pasiskirstymas tranzistoriuje, 
+formuoojamas dvikartės difuzijos būdu, grafiko galime pasakyti, kad netoli bandinio paviršiaus, priemaišos koncentracija 
+kinta staigiaus mažėjimo kryptimi, paskui nežymiai pakyla ir likusio bandinio dalyje lieka pastovi.\\
+
+Tirdami dvipolio tranzistorių, apskaičiavimo jo parametrus, sudarėme jo ekvivalentinę $\Pi$ pavidalo grandinę. 
+Apskaičiavę $h$ parametrus, galime pamatyti, kad dvipolio tranzistoriaus įėjimo varža yra gan didelę ( $750 \Omega$ ), 
+grįžtamojo ryšio koeficientas yra labai mažas ( šiuolaikiniuose tranzistoriuose jo visai nepaisoma ), srovės perdavimo 
+koeficientas yra $181.25$, išėjimo laidumas yra $0.1mS$ arba išėjimo varža $10k \Omega$. Pasirinkę darbo tašką 
+$K_{KQ} = 16.1 mA$ apskaičiavome tranzistoriaus perdavimo charakteristikos statumą $g_m$, kuris lygus 0.644. Žinodami 
+$g_m$ ir $\beta$, kuri lygi bendro emiterio jungimo schemoje yra $h_{12E}$, apskaičiavome $r_{\pi}$, $r_0$ ir $r_{B}^{*}$. 
+Žinodami vienetinio srovės perdavimo koeficiento dažnį, apskaičiavome tranzistoriaus parazitines talpas $C_{\pi}$.\\
+
+Lauko tranzistoriaus perdavimo charakteristiką galima nubraižyti iš lauko tranzistoriaus išėjimo charakteristikos, pasirenkant 
+$U_{SI}$ kaip konstantą ir keisdami $U_{UI}$, žiūrime kaip kinta $I_{S}$. Apskaičiavome lauko tanzistoriaus darbo taške 
+$U_{UI} = 0.5 V$, $U_{SI} = 5 V$ perdavimo charakteristiko statumą, kuris lygūs santakos srovės ir užtūros-ištakos įtampos 
+pokyčiui, ir tranzistoriaus išėjimo (vidinę) varžą, kuri lygi santakos-ištakos įtampos ir santakos srovės pokyčiui. Taip pat 
+apskaičiavome tranzistoriaus dažnį, kuriam esant, tranzistorius nustoja stiprinti srovę $f_T = 159 Mhz$.\\
+
+Projektuodami akustinį elektronikos įtaisą, pasitelkėme kompiuterinę programą, kuri mums pateikė tikslius akustinio 
+elektronikos įtaisų parametrus, nubraižė įtaiso DACh. Iš skaičiavimu matome, kad akustoelektonikos įtaisas yra 
+labai mažų gabaritų, tik 0.15 mm. Teoriniai filtrai nuo realių dažniausiai skiriasi dėl to, kad teoriniuose 
+skaičiavimuose nebuvo atsižvelgta į aplinkos įtaką filtrui.\\
+
+\section{Literatūra}
+
+\begin{itemize}
+	\item S.Štaras. Puslaidininkinės ir funkcinės Elektronikos įtaisai. Vilnius, "Technika", 2005, 468 p.
+	\item S.Štaras. Elektronikos pagindai. Akustoelektronika. Vilnius, "TECHNIKA", 1994, 56 p.
+	\item {\cyrrm{ Orlov V.S., Bondarenko V.S. "Fil{\cprime}try na poverchnostnykh akusticheskix volnakh", 1984 m. }}
+\end{itemize}
+
 
 \end{document}
